@@ -19,24 +19,15 @@ export function getAllPosts (category: string): Frontmatter[] {
   const postsDir = path.join(ROOT_PATH, category)
   const fileNames = fs.readdirSync(postsDir)
   return fileNames.map(fileName => {
+    const slug = fileName.replace(/\.mdx?$/, '')
     const fullPath = path.join(postsDir, fileName)
     const fileContents = fs.readFileSync(fullPath, 'utf-8')
-    const parsedMatter = matter(fileContents)
-    return parsedMatter.data as Frontmatter
+    return { ...parsedMatter.attributes, slug }
   })
 }
 
 export function getAllPaths (category: string): Slug[] {
-  const postsDir = path.join(ROOT_PATH, category)
-  const fileNames = fs.readdirSync(postsDir)
-  return fileNames.map(fileName => {
-    const fullPath = path.join(postsDir, fileName)
-    const fileContents = fs.readFileSync(fullPath, 'utf-8')
-    const parsedMatter = matter(fileContents)
-    return {
-      params: { slug: parsedMatter.data.slug as string }
-    }
-  })
+    params: { slug: fm.slug }
 }
 
 export async function getPost (category: string, slug: string | string[] | undefined): Promise<_Post> {
