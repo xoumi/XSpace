@@ -1,7 +1,7 @@
 import type { GetStaticPaths, GetStaticProps } from 'next'
 import { getAllPaths, getPost } from 'util/md'
 import { getMDXComponent } from 'mdx-bundler/client'
-import type { _Post } from 'types/frontmatter'
+import type { ParsedFM } from 'types/frontmatter'
 import React from 'react'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -20,7 +20,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return { props: {} }
 }
 
-const Post: React.FC<_Post> = ({ code, frontmatter }): React.ReactElement => {
+const Post: React.FC<ParsedFM> = ({ code, frontmatter }): React.ReactElement => {
   const Component = React.useMemo(() => getMDXComponent(code), [code])
   return (
     <article style={{ margin: '0 auto', maxWidth: '800px', padding: '48px' }}>

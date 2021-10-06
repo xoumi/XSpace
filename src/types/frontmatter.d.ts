@@ -12,9 +12,9 @@ export interface Slug {
   }
 }
 
-export interface _Post {
+export interface ParsedFM {
   code: string
-  frontmatter: {
+  frontmatter: Frontmatter | {
     [key: string]: any
   }
 }

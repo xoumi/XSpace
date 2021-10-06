@@ -1,17 +1,8 @@
 import fs from 'fs'
 import path from 'path'
-import matter from 'gray-matter'
-import { bundleMDX } from 'mdx-bundler'
-import remarkDirective from 'remark-directive'
-import shortList from './shortList'
-
-import type { Frontmatter, Slug, _Post } from 'types/frontmatter'
-
-if (process.platform === 'win32') {
-  process.env.ESBUILD_BINARY_PATH = path.join(process.cwd(), 'node_modules', 'esbuild', 'esbuild.exe')
-} else {
-  process.env.ESBUILD_BINARY_PATH = path.join(process.cwd(), 'node_modules', 'esbuild', 'bin', 'esbuild')
-}
+import matter from 'front-matter'
+import parseMD from './xdm'
+import type { Frontmatter, Slug, ParsedFM } from 'types/frontmatter'
 
 const ROOT_PATH = path.join(process.cwd(), 'posts')
 
@@ -22,28 +13,23 @@ export function getAllPosts (category: string): Frontmatter[] {
     const slug = fileName.replace(/\.mdx?$/, '')
     const fullPath = path.join(postsDir, fileName)
     const fileContents = fs.readFileSync(fullPath, 'utf-8')
+    const parsedMatter = matter<Frontmatter>(fileContents)
     return { ...parsedMatter.attributes, slug }
   })
 }
 
 export function getAllPaths (category: string): Slug[] {
+  return getAllPosts(category).map(fm => ({
     params: { slug: fm.slug }
+  }))
 }
 
-export async function getPost (category: string, slug: string | string[] | undefined): Promise<_Post> {
+export async function getPost (category: string, slug: string | string[] | undefined): Promise<ParsedFM> {
   if (typeof (slug) === 'string') {
     const postDir = path.join(ROOT_PATH, category, slug + '.mdx')
     const source = fs.readFileSync(postDir, 'utf-8')
 
-    const { code, frontmatter } = await bundleMDX(source, {
-      xdmOptions (options) {
-        options.remarkPlugins = [...(options.remarkPlugins ?? []), remarkDirective, shortList]
-        return options
-      },
-      cwd: postDir
-    }) as _Post
-    return { code, frontmatter }
-  } else {
-    return { code: '', frontmatter: {} }
+    return await parseMD(source, postDir)
   }
+  return { code: '', frontmatter: {} }
 }
