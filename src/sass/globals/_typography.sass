@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Bitter:wght@500&display=swap')
+
+$font-primary: 'Inter', sans-serif
+$font-secondary: 'Bitter', serif
+
+$text-base: 1em
+$text-scale: 1.35
+$v-rhythm: 24px
+
+$text-xs: calc(1em / #{$text-scale})
+$text-sm: $text-base
+$text-md: calc(1em * #{$text-scale})
+$text-lg: calc(1em * #{$text-scale} * #{$text-scale})
+$text-xl: calc(1em * #{$text-scale} * #{$text-scale} * #{$text-scale})
+$text-xxl: calc(1em * #{$text-scale} * #{$text-scale} * #{$text-scale} * #{$text-scale})
+$text-xxxl: calc(1em * #{$text-scale} * #{$text-scale} * #{$text-scale} * #{$text-scale} * #{$text-scale})
+
+body
+  font-family: $font-primary
+  font-size: $text-base
+  -ms-text-size-adjust: 100%
+  -webkit-text-size-adjust: 100%
+  -moz-osx-font-smoothing: grayscale
+  -webkit-font-smoothing: antialiased
+
+p 
+  margin-bottom: calc(#{$v-rhythm} * 1)
+  margin-top: calc(#{$v-rhythm} * .5)
+  line-height: 1.5em
+  font-size: $text-base
+
+ul li, ol li 
+  margin: calc(#{$v-rhythm} * .5) calc(#{$v-rhythm} * 1.5)
+  line-height: 1.5em
+
+.shortlist li
+  margin: calc(#{$v-rhythm} * .25) calc(#{$v-rhythm} * 1.5)
+  &:last-child
+    margin-bottom: calc(#{$v-rhythm} * .5)
+  &:first-child
+    margin-top: calc(#{$v-rhythm} * .5)
+    
+
+blockquote 
+  margin: 1em 0
+
+h1, h2, h3, h4, h5, h6 
+  font-family: "Bitter", monospace
+
+h1, .text-xl
+  font-size: $text-xxl
+  margin: calc(#{$v-rhythm} * 2) 0
+
+h2
+  font-size: $text-xl
+  margin-bottom: calc(#{$v-rhythm} * 1)
+  margin-top: calc(#{$v-rhythm} * 1.5)
+
+h3
+  font-size: $text-lg
+  margin-bottom: calc(#{$v-rhythm} * 1)
+  margin-top: calc(#{$v-rhythm} * 1.5)
+
+h4
+  font-size: $text-md
+  margin-bottom: calc(#{$v-rhythm} * 1)
+  margin-top: calc(#{$v-rhythm} * 1.5)
+
+h5 
+  font-size: $text-sm
+  margin-bottom: calc(#{$v-rhythm} * .5)
+  margin-top: calc(#{$v-rhythm} * 1)
+
+h6 
+  font-size: $text-xs
+  margin-bottom: calc(#{$v-rhythm} * .5)
+  margin-top: calc(#{$v-rhythm} * 1)
+
+code 
+  vertical-align: bottom 
