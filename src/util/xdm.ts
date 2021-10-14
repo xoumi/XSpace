@@ -2,6 +2,7 @@ import path from 'path'
 import { bundleMDX } from 'mdx-bundler'
 import remarkDirective from 'remark-directive'
 import getToc from './toc'
+import directives from './directives'
 import type { ParsedFM } from 'types/frontmatter'
 
 if (process.platform === 'win32') {
@@ -12,7 +13,8 @@ if (process.platform === 'win32') {
 
 const REMARK_PLUGINS = [
   getToc,
-  remarkDirective
+  remarkDirective,
+  directives
 ]
 
 export default async function parseMD (source: string, postDir: string): Promise<ParsedFM> {
