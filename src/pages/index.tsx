@@ -1,7 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next'
 import type { ReactElement } from 'react'
 import Link from 'next/link'
-import { getAllPosts } from 'util/md'
+import { getAllPosts } from 'util/posts'
 import { Frontmatter } from 'types/frontmatter'
 
 interface PageProps {
