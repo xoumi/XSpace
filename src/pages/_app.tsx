@@ -1,4 +1,6 @@
 import type { AppProps } from 'next/app'
+import TransitionLayout from 'components/layout/TransitionLayout'
+import TransitionContext from 'context/TransitionContext'
 import Nav from 'components/Nav'
 import React from 'react'
 
@@ -11,7 +13,11 @@ function MyApp ({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <div className='light-theme'>
       <Nav />
-    <Component {...pageProps} />
+      <TransitionContext>
+        <TransitionLayout>
+          <Component {...pageProps} />
+        </TransitionLayout>
+      </TransitionContext>
     </div>
   )
 }
