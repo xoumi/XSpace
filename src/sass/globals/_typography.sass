@@ -15,6 +15,12 @@ $text-xl: calc(1em * #{$text-scale} * #{$text-scale} * #{$text-scale})
 $text-xxl: calc(1em * #{$text-scale} * #{$text-scale} * #{$text-scale} * #{$text-scale})
 $text-xxxl: calc(1em * #{$text-scale} * #{$text-scale} * #{$text-scale} * #{$text-scale} * #{$text-scale})
 
+$text-sizes: ( text-xs: $text-xs, text-sm: $text-sm, text-md: $text-md, text-lg: $text-lg, text-xl: $text-xl, text-xxl: $text-xxl, text-xxxl: $text-xxxl )
+
+@each $text-size, $text-value in $text-sizes
+  .#{$text-size} 
+    font-size: $text-value
+
 body
   font-family: $font-primary
   font-size: $text-base
@@ -23,58 +29,61 @@ body
   -moz-osx-font-smoothing: grayscale
   -webkit-font-smoothing: antialiased
 
-p 
-  margin-bottom: calc(#{$v-rhythm} * 1)
-  margin-top: calc(#{$v-rhythm} * .5)
-  line-height: 1.5em
-  font-size: $text-base
+a
+  text-decoration: none
+  color: inherit
 
-ul li, ol li 
-  margin: calc(#{$v-rhythm} * .5) calc(#{$v-rhythm} * 1.5)
-  line-height: 1.5em
-
-.shortlist li
-  margin: calc(#{$v-rhythm} * .25) calc(#{$v-rhythm} * 1.5)
-  &:last-child
-    margin-bottom: calc(#{$v-rhythm} * .5)
-  &:first-child
-    margin-top: calc(#{$v-rhythm} * .5)
-    
-
-blockquote 
-  margin: 1em 0
+ul
+  list-style-type: none
 
 h1, h2, h3, h4, h5, h6 
   font-family: "Bitter", monospace
 
-h1, .text-xl
-  font-size: $text-xxl
-  margin: calc(#{$v-rhythm} * 2) 0
+article
+  p 
+    margin-bottom: calc(#{$v-rhythm} * 1)
+    margin-top: calc(#{$v-rhythm} * .5)
+    line-height: 1.5em
+    font-size: $text-base
 
-h2
-  font-size: $text-xl
-  margin-bottom: calc(#{$v-rhythm} * 1)
-  margin-top: calc(#{$v-rhythm} * 1.5)
+  ul li, ol li 
+    margin: calc(#{$v-rhythm} * .5) calc(#{$v-rhythm} * 1.5)
+    line-height: 1.5em
 
-h3
-  font-size: $text-lg
-  margin-bottom: calc(#{$v-rhythm} * 1)
-  margin-top: calc(#{$v-rhythm} * 1.5)
+  .shortlist li
+    margin: calc(#{$v-rhythm} * .25) calc(#{$v-rhythm} * 1.5)
+    &:last-child
+      margin-bottom: calc(#{$v-rhythm} * .5)
+    &:first-child
+      margin-top: calc(#{$v-rhythm} * .5)
+      
 
-h4
-  font-size: $text-md
-  margin-bottom: calc(#{$v-rhythm} * 1)
-  margin-top: calc(#{$v-rhythm} * 1.5)
+  blockquote 
+    margin: 1em 0
 
-h5 
-  font-size: $text-sm
-  margin-bottom: calc(#{$v-rhythm} * .5)
-  margin-top: calc(#{$v-rhythm} * 1)
+  h1
+    font-size: $text-xl
+    margin: calc(#{$v-rhythm} * 2) 0
 
-h6 
-  font-size: $text-xs
-  margin-bottom: calc(#{$v-rhythm} * .5)
-  margin-top: calc(#{$v-rhythm} * 1)
+  h2
+    font-size: $text-lg
+    margin-bottom: calc(#{$v-rhythm} * 1)
+    margin-top: calc(#{$v-rhythm} * 1.5)
 
-code 
-  vertical-align: bottom 
+  h3
+    font-size: $text-md
+    margin-bottom: calc(#{$v-rhythm} * 1)
+    margin-top: calc(#{$v-rhythm} * 1.5)
+
+  h4
+    font-size: $text-sm
+    margin-bottom: calc(#{$v-rhythm} * 1)
+    margin-top: calc(#{$v-rhythm} * 1.5)
+
+  h5 
+    font-size: $text-xs
+    margin-bottom: calc(#{$v-rhythm} * .5)
+    margin-top: calc(#{$v-rhythm} * 1)
+
+  code 
+    vertical-align: bottom

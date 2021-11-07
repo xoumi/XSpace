@@ -1,0 +1,37 @@
+@use "sass:color"
+
+//Light Base colors (H, S, L)
+$l-blue:  205 90% 75%
+$l-green: 125 70% 80%
+$l-grey:  200 15% 90%
+//Dark Base colors (H, S, L)
+$d-blue:  204 85 23
+$d-green: 162 85 22
+$d-grey:  195 15 30
+
+@mixin generate-light-theme($base)
+  $clr: hsl($base)
+  --bg: #{color.scale($clr, $lightness: 85%)}
+  --fg: #{color.scale($clr, $lightness: -80%, $saturation: -60%)}
+  --accent: #{$clr}
+
+@mixin generate-dark-theme($base)
+  $clr: hsl($base)
+  --bg: #{color.scale($clr, $lightness: -50%, $saturation: -20%)}
+  --fg: #{color.scale($clr, $lightness: 75%, $saturation: -60%)}
+
+.light-theme
+  .grey-theme
+    @include generate-light-theme($l-grey)
+  .blue-theme
+    @include generate-light-theme($l-blue)
+  .green-theme
+    @include generate-light-theme($l-green)
+
+.dark-theme
+  .grey-theme
+    @include generate-dark-theme($d-grey)
+  .blue-theme
+    @include generate-dark-theme($d-blue)
+  .green-theme
+    @include generate-dark-theme($d-green)
