@@ -28,5 +28,5 @@ export default async function parseMD (source: string, postDir: string): Promise
     },
     cwd: postDir
   })
-  return { code: final.code, frontmatter: final.frontmatter }
+  return final
 }

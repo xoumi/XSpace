@@ -17,6 +17,7 @@ export interface ParsedFM {
   frontmatter: Frontmatter | {
     [key: string]: any
   }
+  component: string
   // TODO: Figure out making this generic
   toc?: any
 }
