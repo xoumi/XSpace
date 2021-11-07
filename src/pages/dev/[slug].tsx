@@ -1,6 +1,6 @@
 import type { GetStaticPaths, GetStaticProps } from 'next'
 import { getAllPaths, getPost } from 'util/posts'
-import { getMDXComponent } from 'mdx-bundler/client'
+import { getMDXExport } from 'mdx-bundler/client'
 import type { ParsedFM } from 'types/frontmatter'
 import React from 'react'
 
@@ -11,18 +11,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (params !== undefined) {
-    const { code, frontmatter, component } = await getPost('dev', params.slug)
+    const { code } = await getPost('dev', params.slug)
     return {
-      props: { code, frontmatter, component }
+      props: { code }
     }
   }
 
   return { props: {} }
 }
 
-const Post = ({ code, frontmatter, component }: ParsedFM): React.ReactElement => {
-  const parsedExports = getMDXComponent(component)
-
+const Post = ({ code, frontmatter }: ParsedFM): React.ReactElement => {
+  const parsedExports = getMDXExport(code)
   const Component = React.useMemo(() => parsedExports.default, [code])
 
   return (
