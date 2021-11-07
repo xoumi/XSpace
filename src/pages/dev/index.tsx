@@ -57,5 +57,8 @@ const Landing: NextPage<PageProps> = ({ allPosts }): ReactElement => {
   )
 }
 
+Landing.getLayout = function getLayout (page: ReactElement) {
+  return <PostListLayout>{page}</PostListLayout>
+}
 
 export default Landing
