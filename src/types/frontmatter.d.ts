@@ -3,7 +3,7 @@ export interface Frontmatter {
   slug: string
   createdAt?: Date
   updatedAt?: Date
-  tags?: String[]
+  tags?: string[]
 }
 
 export interface Slug {
@@ -17,7 +17,6 @@ export interface ParsedFM {
   frontmatter: Frontmatter | {
     [key: string]: any
   }
-  component: string
   // TODO: Figure out making this generic
   toc?: any
 }

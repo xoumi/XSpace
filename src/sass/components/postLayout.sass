@@ -3,5 +3,17 @@
 .container
   height: 100vh
   margin: auto
-  overflow: hidden auto
-  width: v.$post-width
+  max-width: v.$post-width
+  width: 100%
+  border: 1px solid var(--accent)
+  article
+    margin-top: v.$s * 5
+    p, h1, h2, h3, h4, h5, blockquote, ul, ol
+      padding-left: v.$s * 2
+      padding-right: v.$s * 2
+
+@media (max-width: v.$post-width)
+  .container article
+    p, h1, h2, h3, h4, h5, blockquote, ul, ol
+      padding-left: v.$s
+      padding-right: v.$s

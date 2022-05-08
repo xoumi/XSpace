@@ -1,12 +1,8 @@
-import type { GetStaticProps, NextPage } from 'next'
-import type { ReactElement } from 'react'
+import type { GetStaticProps, NextPage } from 'next';
+import type { ReactElement } from 'react';
 
-export const getStaticProps: GetStaticProps<{}> = async (context) => {
-  return { props: { } }
-}
+export const getStaticProps: GetStaticProps<Record<string, unknown>> = async () => Promise.resolve({ props: {} });
 
-const Landing: NextPage = (): ReactElement => {
-  return <> </>
-}
+const Landing: NextPage = (): ReactElement => <> </>;
 
-export default Landing
+export default Landing;

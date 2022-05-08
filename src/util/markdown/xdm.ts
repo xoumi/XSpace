@@ -1,6 +1,7 @@
 import path from 'path'
 import { bundleMDX } from 'mdx-bundler'
 import remarkDirective from 'remark-directive'
+import remarkPrism from 'remark-prism'
 import getToc from './toc'
 import directives from './directives'
 import type { ParsedFM } from 'types/frontmatter'
@@ -14,12 +15,13 @@ if (process.platform === 'win32') {
 const REMARK_PLUGINS = [
   getToc,
   remarkDirective,
-  directives
+  directives,
+  remarkPrism
 ]
 
-export default async function parseMD (source: string, postDir: string): Promise<ParsedFM> {
+export default async function parseMD(source: string, postDir: string): Promise<ParsedFM> {
   const final = await bundleMDX(source, {
-    xdmOptions (options) {
+    xdmOptions(options) {
       options.remarkPlugins = [
         ...(options.remarkPlugins ?? []),
         ...REMARK_PLUGINS

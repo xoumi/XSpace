@@ -1,9 +1,10 @@
+@use 'variables' as v
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Bitter:wght@500&display=swap')
 
 $font-primary: 'Inter', sans-serif
-$font-secondary: 'Bitter', serif
+$font-secondary: 'Bahnschrift', serif
 
-$text-base: 1em
+$text-base: 14px
 $text-scale: 1.35
 $v-rhythm: 24px
 
@@ -18,7 +19,7 @@ $text-xxxl: calc(1em * #{$text-scale} * #{$text-scale} * #{$text-scale} * #{$tex
 $text-sizes: ( text-xs: $text-xs, text-sm: $text-sm, text-md: $text-md, text-lg: $text-lg, text-xl: $text-xl, text-xxl: $text-xxl, text-xxxl: $text-xxxl )
 
 @each $text-size, $text-value in $text-sizes
-  .#{$text-size} 
+  .#{$text-size}
     font-size: $text-value
 
 body
@@ -36,17 +37,20 @@ a
 ul
   list-style-type: none
 
-h1, h2, h3, h4, h5, h6 
-  font-family: "Bitter", monospace
+h1, h2, h3, h4, h5, h6
+  font-family: $font-secondary
 
 article
-  p 
+  a
+    color: var(--accent)
+    text-decoration: underline
+  p
     margin-bottom: calc(#{$v-rhythm} * 1)
     margin-top: calc(#{$v-rhythm} * .5)
     line-height: 1.5em
     font-size: $text-base
 
-  ul li, ol li 
+  ul li, ol li
     margin: calc(#{$v-rhythm} * .5) calc(#{$v-rhythm} * 1.5)
     line-height: 1.5em
 
@@ -56,10 +60,22 @@ article
       margin-bottom: calc(#{$v-rhythm} * .5)
     &:first-child
       margin-top: calc(#{$v-rhythm} * .5)
-      
 
-  blockquote 
-    margin: 1em 0
+  blockquote
+    margin: v.$s 0
+    padding-left: v.$s
+    position: relative
+    max-width: v.$post-width * .8
+    font-style: italic
+    adding-left: .5rem !important
+    &:before
+      content: ""
+      background: var(--accent)
+      width: v.$s * .25
+      height: 100%
+      position: absolute
+      left: 0
+      top: 0
 
   h1
     font-size: $text-xl
@@ -80,10 +96,10 @@ article
     margin-bottom: calc(#{$v-rhythm} * 1)
     margin-top: calc(#{$v-rhythm} * 1.5)
 
-  h5 
+  h5
     font-size: $text-xs
     margin-bottom: calc(#{$v-rhythm} * .5)
     margin-top: calc(#{$v-rhythm} * 1)
 
-  code 
+  code
     vertical-align: bottom

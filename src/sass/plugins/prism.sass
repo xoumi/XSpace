@@ -1,0 +1,136 @@
+@use '../globals/colors' as c
+@use '../globals/variables' as v
+
+$fontFamily: 'Jet Brains Mono', Monaco, 'Andale Mono', 'Ubuntu Mono', monospace
+$fontSize: 14px
+$lineHeight: 1.5
+$tabSize: 2
+$paddingTop: 1em
+$textShadow: none
+
+$blockBackground: var(--fg)
+
+$baseColor: #5C6E74
+$commentColor: #93A1A1
+$punctuationColor: #999
+$propertyColor: #905
+$selectorColor: #690
+$operatorColor: #a67f59
+$operatorBg: hsla(0, 0%, 100%, .5)
+$variableColor: #e90
+$functionColor: #DD4A68
+$keywordColor: #07a
+$selectedColor: #b3d4fc
+$inlineCodeColor: #DB4C69
+$inlineCodeBackground: #F9F2F4
+$highlightBackground: #F7EBC6
+$highlightAccent: #F7D87C
+
+.filename
+  font-size: .8rem
+
+pre
+  color: $baseColor
+  font-size: $fontSize
+  text-shadow: $textShadow
+  font-family: $fontFamily
+  direction: ltr
+  text-align: left
+  white-space: pre
+  word-spacing: normal
+  word-break: normal
+  line-height: $lineHeight
+  -moz-tab-size: $tabSize
+  -o-tab-size: $tabSize
+  tab-size: $tabSize
+  -webkit-hyphens: none
+  -moz-hyphens: none
+  -ms-hyphens: none
+  hyphens: none
+  &::selection, &::mozselection
+    text-shadow: none
+    background: $selectedColor
+
+//Blocks 
+pre[class*="language-"] 
+    padding: $paddingTop
+    margin: .5em 0
+    overflow: auto
+    background: $blockBackground
+    border-top: 2px solid var(--accent)
+    border-bottom: 2px solid var(--accent)
+
+// Inline code 
+:not(pre) > code[class*="language-"]
+  padding: .1em 3em
+  border-radius: 3em
+  color: $inlineCodeColor
+  background: $inlineCodeBackground
+
+.namespace
+  opacity: .7
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata
+  color: $commentColor
+.token
+  &.punctuation
+    color: $punctuationColor
+  &.function
+    color: $functionColor
+  &.italic
+    font-style: italic
+  &.entity
+    cursor: help
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted
+  color: $propertyColor
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted
+  color: $selectorColor
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string
+  color: $operatorColor
+  background: $operatorBg
+.token.atrule,
+.token.attr-value,
+.token.keyword
+  color: $keywordColor
+.token.regex,
+.token.important,
+.token.variable
+  color: $variableColor
+.token.important,
+.token.bold
+  font-weight: bold
+pre[data-line]
+  position: relative
+pre[class*="language-"] 
+  & > code[class*="language-"]
+    position: relative
+    z-index: 1
+.line-highlight
+  position: absolute
+  left: 0
+  right: 0
+  padding: inherit 0
+  margin-top: $paddingTop
+  background: $highlightBackground
+  box-shadow: inset 5px 0 0 $highlightAccent
+  z-index: 0
+  pointer-events: none
+  line-height: inherit
+  white-space: pre

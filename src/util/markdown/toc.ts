@@ -1,7 +1,7 @@
 import { valueToEstree } from 'estree-util-value-to-estree'
 import { visit } from 'unist-util-visit'
 import type { Node, Data, Parent } from 'unist'
-import type { Heading } from 'mdast'
+import type { Heading } from 'remark'
 import { toString } from 'mdast-util-to-string'
 
 interface IdHeading extends Heading {

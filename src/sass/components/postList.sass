@@ -1,0 +1,11 @@
+@use '../globals/variables' as v
+
+.postList
+  margin-top: v.$s * 10
+  .post
+    padding: v.$s
+    margin-top: -2px
+    transition: background .25s
+    color: var(--fg)
+    &:hover
+      background: rgba(var(--accent-rgb), .2)

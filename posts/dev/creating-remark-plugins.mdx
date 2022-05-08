@@ -1,0 +1,39 @@
+---
+title: Creating Remark-directive plugins
+---
+
+While I was working on the global typography of this site, I came across [this gist](https://gist.github.com/seyoum/72b4aafbacc10df28e2d22c7fd2d07e6). It had a variety of realistic markup with actual sentences instead of just lorem ipsum. One of the sentences read as follows:
+
+> Short items lists look better if they are compactly presented, whereas for long items, it would be better to have more vertical spacing between items.
+
+To differentiate a 'short list' from a normal one we need to bring in css classes to our document which would mean bringing in html's syntax as well. I felt that beats the simplicity of using markdown.  
+Enter [remark-directive](https://github.com/remarkjs/remark-directive). It lets us to create our own custom blocks of text in markdown and manipulate them as per our requirements.
+
+Taking the above problem, I can use `remark-directive` to denote a inline block. Let's call it 'shortlist'. Next, I can write another custom remark plugin that adds the 'shortlist' class to any `ul` or `ol`. I think the below _feels_ like markdown would have:
+
+```markdown
+:: shortlist
+  * small
+  * words
+  * list
+```
+
+::file[customName.js]{.fileName}
+```js
+for (var i = 0; i<=10; i++) {
+    // say hello
+    echo("hello");
+}
+```
+
+compared to using the inbuilt html override.
+
+```markdown
+<div class="shortlist">
+  * small
+  * words
+  * list
+</div>
+```
+
+## Creating Remark-directive plugins

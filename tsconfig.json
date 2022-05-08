@@ -14,7 +14,15 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": "./src",
+    "noErrorTruncation": true
   },
-  "include": ["next-env.d.ts", "src/types/additional.d.ts", "**/*.ts", "**/*.tsx", "**/*.mdx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "src/types/additional.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.mdx"
+  ],
+  "exclude": ["node_modules"],
+  "paths": { "@/*": ["./*"] }
 }
