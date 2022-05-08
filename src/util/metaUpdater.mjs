@@ -1,10 +1,13 @@
+// All credits to: https://leerob.io/snippets/update-mdx-meta
+
 import { parse, resolve } from 'path';
 import { remark } from 'remark';
-import stringify from 'remark-stringify';
-import { readSync, write } from 'to-vfile';
+// import { readSync, write } from 'to-vfile';
+import { promises }from 'fs';
 import { execa } from 'execa';
 import matter from 'gray-matter';
 
+// Get modified .mdx files
 const getMdxFilesFromCommit = async () => {
   const res = await execa('git', ['diff', '--name-only', '--cached']);
   const files = res.stdout;
@@ -14,13 +17,16 @@ const getMdxFilesFromCommit = async () => {
   return '';
 };
 
-const updateMeta = async (paths:string[]) => {
+const updateMeta = async (paths) => {
   await Promise.all(
-    paths.map((path) => {
-      const file = readSync(path);
+    paths.map(async (path) => {
+      const file = await promises.readFile(path);
       console.log({ file });
-      const a = matter(file.value as string);
-      console.log(a);
+      const res = matter(file);
+      res.data.lastEdited = new Date().toISOString()
+      const updatedFile = matter.stringify(res.content, res.data);
+      console.log(updatedFile);
+      await promises.writeFile(path, updatedFile);
       //   .use(mdxMetadata, {
       //     meta: {
       //       lastEdited: new Date().toISOString(),
@@ -42,15 +48,16 @@ const updateMeta = async (paths:string[]) => {
   );
 };
 
+const add = async (files) => {
+  return execa('git', ['add', ...[files]]);
+}
+
 const updateModifiedFiles = async () => {
-  // Get modified .mdx files
   const paths = await getMdxFilesFromCommit();
   console.log({ paths });
   if (paths.length > 0) {
-    // Update the lastEdited metadata
-    await updateMeta(paths as string[]);
-    // Add these changes to the staged commit
-    // await add(paths);
+    await updateMeta(paths);
+    await add(paths);
   }
 };
 

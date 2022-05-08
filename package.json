@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix",
-    "updateMeta": "npx ts-node src/util/metaUpdater.ts"
+    "updateMeta": "node src/util/metaUpdater.mjs"
   },
   "dependencies": {
     "execa": "^6.1.0",
@@ -113,6 +113,7 @@
     "coverage",
     "**/.next/*",
     ".sass",
+    "*.mjs",
     "next-env.d.ts"
   ]
 }
