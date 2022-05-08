@@ -1,4 +1,5 @@
 // All credits to: https://leerob.io/snippets/update-mdx-meta
+// I went the gray-matter approach as I'm already using it
 
 import { parse, resolve } from 'path';
 import { remark } from 'remark';
@@ -21,43 +22,23 @@ const updateMeta = async (paths) => {
   await Promise.all(
     paths.map(async (path) => {
       const file = await promises.readFile(path);
-      console.log({ file });
-      const res = matter(file);
-      res.data.lastEdited = new Date().toISOString()
-      const updatedFile = matter.stringify(res.content, res.data);
-      console.log(updatedFile);
+      const {data, content} = matter(file);
+      if(data.created)
+        data.updated = new Date().toISOString()
+      else
+        data.created = new Date().toISOString()
+
+      const updatedFile = matter.stringify(content, data);
       await promises.writeFile(path, updatedFile);
-      //   .use(mdxMetadata, {
-      //     meta: {
-      //       lastEdited: new Date().toISOString(),
-      //     },
-      //   })
-      //   .use(stringify, {
-      //     fences: true,
-      //     listItemIndent: '1',
-      //   })
-      //   .process(file);
-
-      // const contents = result.toString();
-
-      // await write({
-      //   path,
-      //   contents,
-      // });
     }),
   );
 };
 
-const add = async (files) => {
-  return execa('git', ['add', ...[files]]);
-}
-
 const updateModifiedFiles = async () => {
   const paths = await getMdxFilesFromCommit();
-  console.log({ paths });
   if (paths.length > 0) {
     await updateMeta(paths);
-    await add(paths);
+    await execa('git', ['add', ...[paths]]);
   }
 };
 
