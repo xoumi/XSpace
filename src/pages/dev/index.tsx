@@ -1,7 +1,5 @@
 import type { GetStaticProps } from 'next';
-import {
-  ReactElement, useContext, useLayoutEffect, useRef,
-} from 'react';
+import { ReactElement, useContext, useLayoutEffect, useRef, } from 'react';
 import gsap from 'gsap';
 import Link from 'next/link';
 import PostListLayout from 'components/layout/PostListLayout';
@@ -31,18 +29,13 @@ const Landing: LayoutPage<PageProps> = ({ allPosts }): ReactElement => {
   useLayoutEffect(() => {
     if (el.current != null) {
       gsap.from(el.current, {
-        opacity: 0,
-        y: 20,
-        duration: 0.5,
-        ease: 'power3.out',
+        opacity: 0, y: 20, duration: 0.5, ease: 'power3.out',
         onComplete: () => { if (el.current != null) gsap.set(el.current, { clearProps: 'all' }); },
       });
 
       timeline.add(
         gsap.to(el.current, {
-          opacity: 0,
-          y: 20,
-          duration: 0.5,
+          opacity: 0, y: 20, duration: 0.5,
           ease: 'power3.out',
         }),
       );

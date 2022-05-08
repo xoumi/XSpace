@@ -24,5 +24,8 @@
     "**/*.mdx"
   ],
   "exclude": ["node_modules"],
-  "paths": { "@/*": ["./*"] }
+  "paths": { 
+    "@/components/*": ["components/*"],
+    "@/sass/*": ["sass/*"]
+   }
 }
