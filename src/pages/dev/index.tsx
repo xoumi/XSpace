@@ -7,13 +7,10 @@ import { getAllPosts } from 'util/posts';
 import { Frontmatter } from 'types/frontmatter';
 import { TransitionContext } from 'context/TransitionContext';
 import type { TransitionContextI } from 'types/TransitionContext';
+import type { PageProps, Frontmatter } from 'types/mdx';
 import { LayoutPage } from 'types/additional';
 
-interface PageProps {
-  allPosts: Frontmatter[]
-}
-
-export const getStaticProps: GetStaticProps<PageProps> = async () => {
+export const getStaticProps: GetStaticProps<{ allPosts: Frontmatter[] }> = async () => {
   const allPosts = await getAllPosts('dev');
   return {
     props: {
@@ -22,7 +19,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
   };
 };
 
-const Landing: LayoutPage<PageProps> = ({ allPosts }): ReactElement => {
+const Landing: LayoutPage<PageProps> = ({ allPosts, setMeta }): ReactElement => {
   const el = useRef<HTMLUListElement>();
   const { timeline } = useContext(TransitionContext) as TransitionContextI;
 

@@ -1,0 +1,48 @@
+@use 'globals/variables' as v
+
+.tocNav
+  max-width: v.$sidebar-width
+  height: max-content
+  margin: auto
+  width: 100%
+  display: flex
+  align-items: center
+  ul
+    margin: v.$s * .25 0
+  ul > li
+    margin: .5rem
+  li
+    cursor: pointer
+    display: block
+    position: relative
+    &::before
+      width: 100%
+      height: 100%
+      top: 0
+      left: 0
+      position: absolute
+      content: ''
+      background: linear-gradient(90deg, var(--accent-l) 70%, rgba(var(--accent-l-rgb), 0) 100%)
+      opacity: 0
+      transition: opacity .25s
+      z-index: -1
+    &:hover::before
+      opacity: 1
+  code
+    padding: v.$s * .25
+
+
+.desktop.tocNav
+  position: fixed
+  height: 100vh
+  display: flex
+  left: calc(50% + v.$post-width * .5)
+
+.mobile.tocNav
+  margin: 0 v.$s * 2 v.$s * 3
+
+.desktop.tocNav
+  .outline
+    padding-left: v.$s * .25
+    padding-bottom: v.$s * .25
+    border-bottom: 1px solid var(--accent)

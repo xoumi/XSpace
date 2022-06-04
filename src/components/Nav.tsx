@@ -30,7 +30,7 @@ function Nav(): React.ReactElement {
   }
 
   return (
-    <nav>
+    <nav className="rootNav">
       <ul
         style={{ marginLeft: getLeftShift() }}
         className={`routes-container ${router.pathname !== '/' ? 'active' : ''}`}

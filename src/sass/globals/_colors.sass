@@ -16,12 +16,18 @@ $d-grey: 195 15% 30%
   $clr: hsl($base)
   $bg: color.scale($clr, $lightness: 85%)
   $fg: color.scale($clr, $lightness: -80%, $saturation: -60%)
+  $accent-d: color.scale($clr, $lightness: -50%, $saturation: +10%)
+  $accent-l: color.scale($clr, $lightness: +50%, $saturation: -10%)
   --bg: #{$bg}
   --fg: #{$fg}
   --accent: #{$clr}
+  --accent-d: #{$accent-d}
+  --accent-l: #{$accent-l}
   --bg-rgb: #{getRGB($bg)}
   --fg-rgb: #{getRGB($fg)}
   --accent-rgb: #{getRGB($clr)}
+  --accent-d-rgb: #{getRGB($accent-d)}
+  --accent-l-rgb: #{getRGB($accent-l)}
 
 @mixin generate-dark-theme($base)
   $clr: hsl($base)

@@ -1,13 +1,23 @@
 @use 'globals/reset'
 @use 'globals/typography'
 @use 'globals/colors'
+@use 'globals/variables' as v
 
 @use 'plugins/simplebar'
 @use 'plugins/prism'
 
 @use 'components/nav'
+@use 'components/tocNav'
 @use 'components/postLayout'
 @use 'components/postList'
 
-.root
-  overflow: hidden
+
+.mobile
+  display: none
+.desktop
+  display: block
+@media (max-width: (v.$sidebar-width * 2) + v.$post-width)
+  .desktop
+    display: none
+  .mobile
+    display: block

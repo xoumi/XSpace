@@ -1,11 +1,11 @@
-import type { GetStaticPaths, GetStaticProps } from 'next';
+import type { GetStaticPaths, GetStaticProps } from 'next'
 import {
-  useLayoutEffect, useContext, useRef, useMemo,
-} from 'react';
-import { getAllPaths, getPost } from 'util/posts';
-import { getMDXExport } from 'mdx-bundler/client';
-import type { ParsedFM } from 'types/frontmatter';
+  useLayoutEffect, useContext, useRef, useMemo, useEffect
+} from 'react'
+import { getMDXExport } from 'mdx-bundler/client'
 import PostListLayout from 'components/layout/PostListLayout';
+import { getAllPaths, getPost } from 'util/posts';
+import type { ParsedFM, Toc } from 'types/mdx';
 import { TransitionContext } from 'context/TransitionContext';
 import type { TransitionContextI } from 'types/TransitionContext';
 import { gsap } from 'gsap';
@@ -26,7 +26,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return { props: {} };
 };
 
+let toc: Toc[] = [];
+
 const Post = ({ code, frontmatter }: ParsedFM): React.ReactElement => {
+
   const el = useRef<HTMLElement>();
   const Component = useMemo(() => getMDXExport(code).default, [code]);
   const { timeline } = useContext(TransitionContext) as TransitionContextI;
@@ -59,10 +62,11 @@ const Post = ({ code, frontmatter }: ParsedFM): React.ReactElement => {
         }),
       ]);
     }
-  });
+  useEffect(() => setMeta && setMeta({ toc, fm: frontmatter }), [])
 
   return (
     <article
+      id="post"
       ref={(ref) => { if (ref != null) el.current = ref; }}
     >
       <h1>{frontmatter.title}</h1>
@@ -72,7 +76,7 @@ const Post = ({ code, frontmatter }: ParsedFM): React.ReactElement => {
 };
 
 Post.getLayout = function getLayout(page: React.ReactElement) {
-  return <PostListLayout className='blue-theme'>{page}</PostListLayout>;
+  return <PostListLayout className='blue-theme'>{page}</PostListLayout>
 };
 
 export default Post;

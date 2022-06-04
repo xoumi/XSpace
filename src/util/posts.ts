@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import type { Frontmatter, Slug, ParsedFM } from 'types/frontmatter';
+import type { Frontmatter, Slug, ParsedFM } from 'types/mdx';
 import parseMD from './markdown/xdm';
 
 const ROOT_PATH = path.join(process.cwd(), 'posts');

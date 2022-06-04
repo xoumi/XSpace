@@ -1,7 +1,7 @@
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import { getAllPaths, getPost } from 'util/posts';
 import { getMDXExport } from 'mdx-bundler/client';
-import type { ParsedFM } from 'types/frontmatter';
+import type { ParsedFM } from 'types/mdx';
 import { useMemo } from 'react';
 
 export const getStaticPaths: GetStaticPaths = async () => {
