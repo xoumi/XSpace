@@ -1,6 +1,8 @@
+import { TimelineDefinition } from "@motionone/dom/types/timeline/types"
+
 export interface TransitionContextI {
-  timeline: gsap.core.Timeline
-  setTimeline: React.Dispatch<React.SetStateAction<gsap.core.Timeline>>
+  sequence: TimelineDefinition
+  setSequence: React.Dispatch<React.SetStateAction<TimelineDefinition>>
 }
 
 export interface TransitionProviderProps {

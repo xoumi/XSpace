@@ -3,12 +3,13 @@ import {
   useLayoutEffect, useContext, useRef, useMemo, useEffect
 } from 'react'
 import { getMDXExport } from 'mdx-bundler/client'
+import { animate } from 'motion'
+
 import PostListLayout from 'components/layout/PostListLayout';
 import { getAllPaths, getPost } from 'util/posts';
 import type { ParsedFM, Toc } from 'types/mdx';
 import { TransitionContext } from 'context/TransitionContext';
 import type { TransitionContextI } from 'types/TransitionContext';
-import { gsap } from 'gsap';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = await getAllPaths('dev');
@@ -28,40 +29,32 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 let toc: Toc[] = [];
 
-const Post = ({ code, frontmatter }: ParsedFM): React.ReactElement => {
+const Post = ({ code, frontmatter, setMeta }: ParsedFM): React.ReactElement => {
+  const Component = useMemo(() => {
+    const mdxExport = getMDXExport<{ toc: Toc[] }, unknown>(code);
+    toc = mdxExport.toc;
+
+    return mdxExport.default;
+  }, [code]);
 
   const el = useRef<HTMLElement>();
-  const Component = useMemo(() => getMDXExport(code).default, [code]);
-  const { timeline } = useContext(TransitionContext) as TransitionContextI;
-
+  const { setSequence } = useContext(TransitionContext) as TransitionContextI;
   useLayoutEffect(() => {
-    if (el.current != null) {
-      gsap.from('html', {
-        '--simplebar-opacity': 0,
-        duration: 0.5,
-      });
-      gsap.from(el.current, {
-        opacity: 0,
-        y: 20,
-        duration: 0.5,
-        delay: 0.3,
-        ease: 'power3.out',
-        onComplete: () => { if (el.current != null) gsap.set(el.current, { clearProps: 'all' }); },
-      });
+    if (el.current != null && el.current != undefined) {
+      animate('html', { '--simplebar-opacity': 1 }, { duration: 0.5});
+      animate(el.current,
+        { transform: `translateY(20px)`, opacity: 0 },
+        { duration: 0.5, direction: 'reverse', easing: [.7, .2, .35, 1] }
+      ).finished.then(() => {
+        el.current?.removeAttribute('style');
+      })
 
-      timeline.add([
-        gsap.to('html', {
-          '--simplebar-opacity': 0,
-          duration: 0.5,
-        }),
-        gsap.to(el.current, {
-          opacity: 0,
-          y: 20,
-          duration: 0.5,
-          ease: 'power3.out',
-        }),
+      setSequence([
+        [ el.current, { y: 20, opacity: 0 }, { duration: 0.5, easing: [.7, .2, .35, 1] } ],
+        [ 'html', {'--simplebar-opacity': 0}, { duration: 0.5 } ]
       ]);
     }
+  }, []);
   useEffect(() => setMeta && setMeta({ toc, fm: frontmatter }), [])
 
   return (
@@ -69,7 +62,6 @@ const Post = ({ code, frontmatter }: ParsedFM): React.ReactElement => {
       id="post"
       ref={(ref) => { if (ref != null) el.current = ref; }}
     >
-      <h1>{frontmatter.title}</h1>
       <Component />
     </article>
   );

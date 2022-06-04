@@ -1,23 +1,21 @@
 import { TransitionContext } from 'context/TransitionContext';
 import { useState, useContext, useLayoutEffect } from 'react';
 import type { TransitionContextI } from 'types/TransitionContext';
+import { timeline } from 'motion';
 
 const TransitionLayout: React.FC = ({ children }) => {
   const [displayChildren, setDisplayChildren] = useState(children);
-  const { timeline } = useContext(TransitionContext) as TransitionContextI;
+  const { sequence, setSequence } = useContext(TransitionContext) as TransitionContextI;
 
   useLayoutEffect(() => {
     if (children !== displayChildren) {
-      if (timeline.duration() === 0) {
+      if (sequence.length == 0) {
         setDisplayChildren(children);
       } else {
-        timeline
-          .play()
-          .then(() => {
-            timeline.seek(0).pause().clear();
-            setDisplayChildren(children);
-          })
-          .catch((err) => console.log(err));
+        const animation = timeline(sequence);
+        animation.finished.then(() => {
+          setDisplayChildren(children);
+        })
       }
     }
   }, [children]);

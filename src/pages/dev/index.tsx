@@ -1,10 +1,11 @@
 import type { GetStaticProps } from 'next';
-import { ReactElement, useContext, useLayoutEffect, useRef, } from 'react';
-import gsap from 'gsap';
+import {
+  ReactElement, useContext, useLayoutEffect, useRef,
+} from 'react';
+import { animate } from 'motion'
 import Link from 'next/link';
 import PostListLayout from 'components/layout/PostListLayout';
 import { getAllPosts } from 'util/posts';
-import { Frontmatter } from 'types/frontmatter';
 import { TransitionContext } from 'context/TransitionContext';
 import type { TransitionContextI } from 'types/TransitionContext';
 import type { PageProps, Frontmatter } from 'types/mdx';
@@ -21,23 +22,25 @@ export const getStaticProps: GetStaticProps<{ allPosts: Frontmatter[] }> = async
 
 const Landing: LayoutPage<PageProps> = ({ allPosts, setMeta }): ReactElement => {
   const el = useRef<HTMLUListElement>();
-  const { timeline } = useContext(TransitionContext) as TransitionContextI;
+  const { setSequence } = useContext(TransitionContext) as TransitionContextI;
 
   useLayoutEffect(() => {
     if (el.current != null) {
-      gsap.from(el.current, {
-        opacity: 0, y: 20, duration: 0.5, ease: 'power3.out',
-        onComplete: () => { if (el.current != null) gsap.set(el.current, { clearProps: 'all' }); },
+      animate(el.current,
+        { transform: `translateY(20px)`, opacity: 0 },
+        { duration: 0.5, direction: 'reverse', easing: [.7, .2, .35, 1] },
+      ).finished.then(() => {
+        el.current?.removeAttribute('style');
+        setMeta(null);
       });
 
-      timeline.add(
-        gsap.to(el.current, {
-          opacity: 0, y: 20, duration: 0.5,
-          ease: 'power3.out',
-        }),
-      );
+      setSequence([[
+        el.current,
+        { y: 20, opacity: 0 },
+        { duration: 0.5, easing: [.7, .2, .35, 1] }
+      ]]);
     }
-  });
+  }, []);
 
   return (
     <ul className='postList' ref={(ref) => { if (ref != null) el.current = ref; }}>

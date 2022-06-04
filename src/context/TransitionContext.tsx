@@ -1,17 +1,17 @@
 import { useState, createContext } from 'react';
-import gsap from 'gsap';
+import { TimelineDefinition } from '@motionone/dom/types/timeline/types';
 import type { TransitionContextI, TransitionProviderProps } from 'types/TransitionContext';
 
 const TransitionContext = createContext<TransitionContextI | Record<string, unknown>>({});
 
 const TransitionProvider: React.FC<TransitionProviderProps> = ({ children }): React.ReactElement => {
-  const [timeline, setTimeline] = useState(() => gsap.timeline({ paused: true }));
+  const [sequence, setSequence] = useState<TimelineDefinition>([]);
 
   return (
     <TransitionContext.Provider
       value={{
-        timeline,
-        setTimeline,
+        sequence,
+        setSequence,
       }}
     >
       {children}
